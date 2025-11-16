@@ -3,7 +3,7 @@ package Packages;
 import javax.swing.*;
 import java.awt.*;
 
- class PaymentPanel extends JPanel {
+public class PaymentPanel extends JPanel {
     private Information information;
     private Payment payment;
     private Runnable onPaid;
@@ -99,10 +99,11 @@ import java.awt.*;
     public void refresh() {
         int expected = information.T();
         billLabel.setText("Your total bill is: " + expected + " TK");
-
+        // Update order summary from Information model
         String prod = (information.productName == null ? "-" : information.productName);
         productLabel.setText("Product: " + prod);
         qtyLabel.setText("Quantity: " + information.getQuantity());
+        // Do not pre-fill the amount field; require the user to enter it manually
         amountField.setText("");
     }
 }

@@ -233,6 +233,11 @@ public class InfoPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Destination required.", "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        // destination address should not contain numbers
+        if (dest.matches(".*\\d.*")) {
+            JOptionPane.showMessageDialog(this, "❌ Destination address must be valid.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         information.a = dest;
         int bVal = ((Number) weightSpinner.getValue()).intValue();
         information.b = bVal;
