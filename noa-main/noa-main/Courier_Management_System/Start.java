@@ -46,8 +46,50 @@ public class Start {
         loginBtn.addActionListener(e -> {
             boolean ok = r.LogIn();
             if (ok) {
+                // After successful login, present two choices:
+                //  - File a complaint
+                //  - Start courier 
+                JDialog options = new JDialog(frame, "Welcome", true);
+                options.setSize(360, 200);
+                options.setLayout(new BorderLayout(10, 10));
+                options.getContentPane().setBackground(Color.BLACK);
 
-                showComplaintWindow(r, c, z);
+                JLabel msg = new JLabel("Choose an action:", SwingConstants.CENTER);
+                msg.setForeground(Color.GREEN);
+                msg.setFont(new Font("Courier", Font.BOLD, 14));
+                options.add(msg, BorderLayout.NORTH);
+
+                JPanel btnPanel = new JPanel(new GridLayout(1, 2, 12, 12));
+                btnPanel.setBackground(Color.BLACK);
+
+                JButton complainBtn = new JButton("File Complaint");
+                JButton startOrderBtn = new JButton("Start Order");
+                JButton[] optBtns = {complainBtn, startOrderBtn};
+                for (JButton b : optBtns) {
+                    b.setBackground(Color.BLACK);
+                    b.setForeground(Color.GREEN);
+                    b.setFocusPainted(false);
+                    b.setFont(new Font("Courier", Font.BOLD, 13));
+                    btnPanel.add(b);
+                }
+
+                // Open complaint window then workflow
+                complainBtn.addActionListener(ev -> {
+                    options.dispose();
+                    showComplaintWindow(r, c, z);
+                });
+
+                // Directly start the workflow (product selection -> info -> payment)
+                startOrderBtn.addActionListener(ev -> {
+                    options.dispose();
+                    Workflow mw = new Workflow(r, c, z);
+                    mw.open();
+                });
+
+                options.add(btnPanel, BorderLayout.CENTER);
+                
+                options.setLocationRelativeTo(null);
+                options.setVisible(true);
             }
         });
 

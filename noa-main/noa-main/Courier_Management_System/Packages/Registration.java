@@ -122,9 +122,15 @@ public class Registration {
                 return;
             }
 
+            // address - should not contain numbers
+            if (address.isEmpty() || address.matches(".*\\d.*")) {
+                JOptionPane.showMessageDialog(dialog, "❌ Address is required and must not contain numbers.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             // contact 11 digits
-            if (!contact.matches("\\d{11}")) {
-                JOptionPane.showMessageDialog(dialog, "❌ Contact number must be exactly 11 digits.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (!contact.matches("^01[3-9]\\d{8}$")) {
+                JOptionPane.showMessageDialog(dialog, "❌ Contact number must be valid and exactly 11 digits (01X-XXXXXXXX format).", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
